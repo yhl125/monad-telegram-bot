@@ -1,0 +1,11 @@
+version: '3'
+services:
+
+  bot:
+    ports:
+      - "3000:80"
+    volumes:
+      - ".:/usr/src"
+    env_file:
+      - docker-compose.bot.dev.env
+    command: npm run dev
