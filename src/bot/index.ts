@@ -7,17 +7,12 @@ import {
   SessionData,
   createContextConstructor,
 } from "#root/bot/context.js";
-import {
-  adminFeature,
-  languageFeature,
-  unhandledFeature,
-  welcomeFeature,
-} from "#root/bot/features/index.js";
 import { errorHandler } from "#root/bot/handlers/index.js";
-import { i18n, isMultipleLocales } from "#root/bot/i18n.js";
+import { i18n } from "#root/bot/i18n.js";
 import { updateLogger } from "#root/bot/middlewares/index.js";
 import { config } from "#root/config.js";
 import { logger } from "#root/logger.js";
+import { questionFeature } from "./features/question.js";
 
 type Options = {
   sessionStorage?: StorageAdapter<SessionData>;
@@ -51,15 +46,16 @@ export function createBot(token: string, options: Options = {}) {
   protectedBot.use(i18n);
 
   // Handlers
-  protectedBot.use(welcomeFeature);
-  protectedBot.use(adminFeature);
+  // protectedBot.use(welcomeFeature);
+  // protectedBot.use(adminFeature);
+  protectedBot.use(questionFeature);
 
-  if (isMultipleLocales) {
-    protectedBot.use(languageFeature);
-  }
+  // if (isMultipleLocales) {
+  //   protectedBot.use(languageFeature);
+  // }
 
-  // must be the last handler
-  protectedBot.use(unhandledFeature);
+  // // must be the last handler
+  // protectedBot.use(unhandledFeature);
 
   return bot;
 }
